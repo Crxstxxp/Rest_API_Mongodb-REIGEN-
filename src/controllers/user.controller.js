@@ -1,29 +1,35 @@
 const Users = require("../models/Users");
-const bcrypt = require('bcrypt')
-const salytRounds = 10
-var jwt = require('jsonwebtoken')
+const bcrypt = require("bcrypt");
+const salytRounds = 10;
+var jwt = require("jsonwebtoken");
 
 const login = async (req, res) => {
-  const someUser = await Users.findOne({email: req.body.email})
-  if (someUser){
-    const cmp = await bcrypt.compare(req.body.password, someUser.password)
-    if (cmp){
-      var token = jwt.sign({email: someUser.email, _id: someUser._id}, 'Secret',{
-        expiresIn: '2h'
-      })
+  const someUser = await Users.findOne({ email: req.body.email });
+  if (someUser) {
+    const cmp = await bcrypt.compare(req.body.password, someUser.password);
+    if (cmp) {
+      var token = jwt.sign(
+        { email: someUser.email, _id: someUser._id },
+        "Secret",
+        {
+          expiresIn: "2h",
+        }
+      );
       res.send({
         user: someUser.email,
         id: someUser._id,
         token: token,
-        auth: true
-      })
+        auth: true,
+        name: someUser.name,
+        lastName: someUser.lastName,
+      });
     } else {
-      res.send("Usuario o contraseña incorrectos")
+      res.send("Usuario o contraseña incorrectos");
     }
   } else {
-    res.send("Usuario o contraseña incorrectos")
+    res.send("Usuario o contraseña incorrectos");
   }
-}
+};
 
 const verifyJWT = (req, res, next) => {
   const token = req.headers["x-access-token"];
@@ -41,8 +47,8 @@ const verifyJWT = (req, res, next) => {
           error: err,
         });
       } else {
-        req.userEmail = decoded.email
-        req.userId = decoded._id
+        req.userEmail = decoded.email;
+        req.userId = decoded._id;
         next();
       }
     });
@@ -57,11 +63,13 @@ const findAllUsers = async (req, res) => {
 };
 
 const saveUser = async (req, res) => {
-  const hashedPwd = await bcrypt.hash(req.body.password, salytRounds)
+  const hashedPwd = await bcrypt.hash(req.body.password, salytRounds);
   //la linea de arriba solo es para encriptar la contraseña
   const newUser = new Users({
     email: req.body.email,
     password: hashedPwd,
+    name: req.body.name,
+    lastName: req.body.lastName,
   });
   const userSaved = await newUser.save();
   res.json(userSaved);
@@ -93,5 +101,5 @@ module.exports = {
   deleteUser,
   updateUser,
   login,
-  verifyJWT
+  verifyJWT,
 };

@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 
 //conexion a mongodb atlas
 const URI =
-  "mongodb+srv://Crxstxxp:AGUVAZ01@cluster0.jvabohk.mongodb.net/API?retryWrites=true&w=majority";
+  "mongodb+srv://reigendev:12345@cluster0.dwjq1vq.mongodb.net/API?retryWrites=true&w=majority";
 
 mongoose.set("strictQuery", false);
 
