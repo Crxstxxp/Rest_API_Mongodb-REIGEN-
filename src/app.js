@@ -5,12 +5,22 @@ const cors = require("cors");
 //uso de las rutas creadas con express router
 const userRoutes = require("./routes/users.routes");
 const tempyhumeRoutes = require("./routes/tempyhume.routes");
+//Documentacion
+const path = require("path");
+const swaggerUI = require("swagger-ui-express");
+const swaggerJsDoc = require("swagger-jsdoc");
+const swaggerConfig = require("./swaggerConfig")
 
 const app = express();
 //Midelwares
 app.use(express.json());
 app.use(cors());
 app.use(morgan("dev"));
+app.use(
+  "/api/docs",
+  swaggerUI.serve,
+  swaggerUI.setup(swaggerJsDoc(swaggerConfig))
+);
 
 app.get("/", (req, res) => {
   res.send("Si");
