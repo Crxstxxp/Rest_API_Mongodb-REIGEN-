@@ -43,7 +43,7 @@ const router = express.Router();
  *              404:
  *                  description: No encontrado o no existe
  */
-router.get("/", tempyhumeCtrl.findAllData);
+router.get("/", userCtrl.verifyJWT, tempyhumeCtrl.findAllData);
 
 /**
  * @swagger
@@ -69,6 +69,6 @@ router.get("/", tempyhumeCtrl.findAllData);
  *                  description: No encontrado o no existe
  */
 
-router.get("/:id", tempyhumeCtrl.findOneData);
+router.get("/:id", userCtrl.verifyJWT, tempyhumeCtrl.findOneData);
 
 module.exports = router;
