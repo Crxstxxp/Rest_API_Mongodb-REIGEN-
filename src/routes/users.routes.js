@@ -139,7 +139,7 @@ router.get("/", userCtrl.findAllUsers);
  *                  description: No encontrado o no existe
  */
 
-router.get("/:id", userCtrl.findOneUser);
+router.get("/:id", userCtrl.verifyJWT, userCtrl.findOneUser);
 
 /**
  *  @swagger
@@ -160,7 +160,7 @@ router.get("/:id", userCtrl.findOneUser);
  *                  description: No encontrado o no existe
  */
 
-router.delete("/:id", userCtrl.deleteUser);
+router.delete("/:id", userCtrl.verifyJWT, userCtrl.deleteUser);
 
 /**
  * @swagger
@@ -188,6 +188,6 @@ router.delete("/:id", userCtrl.deleteUser);
  *                  description: No encontrado o no existe
  */
 
-router.put("/:id", userCtrl.updateUser);
+router.put("/:id", userCtrl.verifyJWT, userCtrl.updateUser);
 
 module.exports = router;

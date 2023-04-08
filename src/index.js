@@ -15,6 +15,6 @@ mongoose
   .catch((error) => console.log(error));
 
 //arranque de la api
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
   console.log("Server on port", port);
 });

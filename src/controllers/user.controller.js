@@ -34,16 +34,14 @@ const login = async (req, res) => {
 const verifyJWT = (req, res, next) => {
   const token = req.headers["x-access-token"];
   if (!token) {
-    res.send({
-      status: 403,
+    res.status(403).send({
       mensaje: "No se encontro el token",
     });
   } else {
     jwt.verify(token, "Secret", (err, decoded) => {
       if (err) {
-        res.send({
-          status: 402,
-          resultado: { mensaje: "Fallo la autentificación" },
+        res.status(402).send({
+         mrndsjr: "Fallo la autenticación del token",
           error: err,
         });
       } else {
@@ -87,8 +85,18 @@ const deleteUser = async (req, res) => {
   });
 };
 
+// const updateUser = async (req, res) => {
+//   const updatedUser = await Users.findByIdAndUpdate(req.params.id, req.body);
+//   res.json({
+//     mensaje: "El usuario se actualizo :D",
+//   });
+// };
+
 const updateUser = async (req, res) => {
-  const updatedUser = await Users.findByIdAndUpdate(req.params.id, req.body);
+  const { id } = req.params;
+  const { password } = req.body; 
+  const hashedPassword = await bcrypt.hash(password, salytRounds);
+  const updatedUser = await Users.findByIdAndUpdate(id, { ...req.body, password: hashedPassword });
   res.json({
     mensaje: "El usuario se actualizo :D",
   });
