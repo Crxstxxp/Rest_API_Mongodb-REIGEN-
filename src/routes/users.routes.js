@@ -160,7 +160,7 @@ router.get("/:id", userCtrl.verifyJWT, userCtrl.findOneUser);
  *                  description: No encontrado o no existe
  */
 
-router.delete("/:id", userCtrl.verifyJWT, userCtrl.deleteUser);
+router.delete("/:id", userCtrl.deleteUser);
 
 /**
  * @swagger
