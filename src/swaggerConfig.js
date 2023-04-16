@@ -9,7 +9,7 @@ const swaggerConfig = {
         },
         servers: [
           {
-            url: "http://localhost:5000",
+            url: "https://reigen-crxstxxp.vercel.app",
           },
         ],
       },
