@@ -17,5 +17,5 @@ mongoose
 
 //arranque de la api
 app.listen(process.env.PORT || port, () => {
-  console.log("Server on port", port);
+  console.log("Server on port",process.env.PORT || port);
 });
